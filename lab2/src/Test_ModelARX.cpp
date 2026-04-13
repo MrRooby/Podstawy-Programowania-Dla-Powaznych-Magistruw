@@ -80,13 +80,13 @@ void Test_ModelARX::test_ModelArx_unitStep_v1()
 		std::vector<double> actualSignalOut(ITER_COUNT);   // actual output sequence
 
 		// Simulation of a unit step signal at time 1 (!!i is a double negation of i and it gives 1 for i != 0):
-		for (size_t i = 0; i < ITER_COUNT; i++)
+		for (int i = 0; i < ITER_COUNT; i++)
 			signalIn[i] = !!i;
 
 		expectedSignalOut = { 0, 0, 0.6, 0.84, 0.936, 0.9744, 0.98976, 0.995904, 0.998362, 0.999345, 0.999738, 0.999895, 0.999958, 0.999983, 0.999993, 0.999997, 0.999999, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 		// Model simulation:
-		for (size_t i = 0; i < ITER_COUNT; i++)
+		for (int i = 0; i < ITER_COUNT; i++)
 			actualSignalOut[i] = testInstance.simulate(signalIn[i]);
 
 		// Validation of correctness, reporting of test result:

@@ -34,6 +34,7 @@ public:
   );
 
   void setA(const std::vector<double> &value);
+      
 
   void setB(const std::vector<double> &value);
 
