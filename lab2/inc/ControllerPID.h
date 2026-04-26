@@ -1,21 +1,30 @@
+#pragma once
 #include "ObjectSISO.h"
+#include <string>
+#include <nlohmann/json.hpp>
 
 class ControllerPID : public ObjectSISO {
 private:
-  double k = 0.0;  // gain P 
-  double TI = 0.0; // integral constant I
-  double TD = 0.0; // derivative constant D
-
-  double mem_integral = 0.0;
-  double prev_error = 0.0;
-  void nonZeroSetter(const double value, double &value_to_set);
+  double wzmac=0.0;
+  double const_int=0.0;
+  double const_der=0.0;
+  double int_mem=0.0;
+  double err_prev=0.0;
+  
+  void set_val(const double v,double &f);
+  double p_part(const double e);
+  double i_part(const double e);
+  double d_part(const double e);
   
 public:
-  ControllerPID(double P = 0.0, double I = 0.0, double D = 0.0);
+  ControllerPID(double p=0.0,double i=0.0,double d=0.0);
 
-  void setK(const double value);
-  void setTI(const double value);
-  void setTD(const double value);
+  void set_k(const double v);
+  void set_ti(const double v);
+  void set_td(const double v);
 
-  double simulate(const double error) override;
+  double simulate(const double e) override;
+  
+  void save(const std::string& fn);
+  void load(const std::string& fn);
 };
