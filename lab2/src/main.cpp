@@ -221,7 +221,7 @@ void test_RegulatorPID_skokJednostkowy()
 
 using namespace std;
 
-int main()
+int main_cli()
 {
 	test_RegulatorP_brakPobudzenia();
 	test_RegulatorP_skokJednostkowy();
