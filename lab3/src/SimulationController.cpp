@@ -3,6 +3,7 @@
 SimulationController::SimulationController() {
     controller = new ControllerPID(0.5);
     model = new ModelArx({1.0, 0.4}, {0.6}, 1, 0.0);
+    signal = std::make_shared<BaseSignal>();
 }
 
 SimulationController::~SimulationController() {
@@ -25,15 +26,19 @@ void SimulationController::setModelParams(double a1, double b0, int delay, doubl
     }
 }
 
+void SimulationController::setSignalGenerator(std::shared_ptr<SignalGenerator> sig) {
+    signal = sig;
+}
+
 SimulationData SimulationController::runSimulation(
-    const std::vector<double>& setpoints,
+    int steps,
     double dt) {
     
     SimulationData data;
     prev_output = 0.0;
     
-    for (size_t i = 0; i < setpoints.size(); ++i) {
-        double sp = setpoints[i];
+    for (int i = 0; i < steps; ++i) {
+        double sp = signal ? signal->generate(i) : 0.0;
         double error = sp - prev_output;
         double control = controller->simulate(error);
         double output = model->simulate(control);

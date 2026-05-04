@@ -374,6 +374,7 @@ moc_MainWindow.cpp: inc/MainWindow.h \
 		inc/ObjectSISO.h \
 		inc/ModelArx.h \
 		inc/Test_ModelARX.h \
+		inc/SignalGenerator.h \
 		moc_predefs.h \
 		/usr/lib64/qt6/libexec/moc
 	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /media/bartek/LEXAR/SUT/PO/lab3/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/media/bartek/LEXAR/SUT/PO/lab3 -I/media/bartek/LEXAR/SUT/PO/lab3/inc -I/usr/include/nlohmann -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtSql -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include inc/MainWindow.h -o moc_MainWindow.cpp
@@ -399,7 +400,8 @@ main_gui.o: src/main_gui.cpp inc/MainWindow.h \
 		inc/ControllerPID.h \
 		inc/ObjectSISO.h \
 		inc/ModelArx.h \
-		inc/Test_ModelARX.h
+		inc/Test_ModelARX.h \
+		inc/SignalGenerator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_gui.o src/main_gui.cpp
 
 ControllerPID.o: src/ControllerPID.cpp inc/ControllerPID.h \
@@ -416,14 +418,16 @@ MainWindow.o: src/MainWindow.cpp inc/MainWindow.h \
 		inc/ControllerPID.h \
 		inc/ObjectSISO.h \
 		inc/ModelArx.h \
-		inc/Test_ModelARX.h
+		inc/Test_ModelARX.h \
+		inc/SignalGenerator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o src/MainWindow.cpp
 
 SimulationController.o: src/SimulationController.cpp inc/SimulationController.h \
 		inc/ControllerPID.h \
 		inc/ObjectSISO.h \
 		inc/ModelArx.h \
-		inc/Test_ModelARX.h
+		inc/Test_ModelARX.h \
+		inc/SignalGenerator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationController.o src/SimulationController.cpp
 
 moc_MainWindow.o: moc_MainWindow.cpp 
