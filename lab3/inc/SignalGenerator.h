@@ -15,7 +15,7 @@ public:
 class BaseSignal : public SignalGenerator {
 public:
     double generate(int t) override {
-        return 0.0;
+        return 1.0; // The original simulation expected a step response of 1.0 without decorators
     }
     std::string serialize() const override {
         return "BaseSignal\n";
@@ -28,7 +28,7 @@ protected:
 public:
     explicit SignalDecorator(std::shared_ptr<SignalGenerator> comp) : component(comp) {}
     double generate(int t) override {
-        return component ? component->generate(t) : 0.0;
+        return component ? component->generate(t) : 1.0;
     }
     std::string serialize() const override {
         if(component) return component->serialize();

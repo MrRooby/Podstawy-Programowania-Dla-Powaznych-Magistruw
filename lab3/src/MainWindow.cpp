@@ -121,10 +121,12 @@ void GraphWidget::paintEvent(QPaintEvent* event) {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), simCtrl(nullptr) {
     simCtrl = new SimulationController();
-    currentSignal = std::make_shared<BaseSignal>();
     setupUI();
     setWindowTitle("PID Controller Simulator");
     resize(1400, 1000);
+    comboTheme->setCurrentIndex(1);
+    applyTheme(true);
+    onRunSimulation();
 }
 
 MainWindow::~MainWindow() {
@@ -146,6 +148,7 @@ void MainWindow::setupUI() {
     comboTheme = new QComboBox();
     comboTheme->addItem("Light Mode");
     comboTheme->addItem("Dark Mode");
+    comboTheme->setCurrentIndex(1);
     connect(comboTheme, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeChanged(int)));
     themeLayout->addWidget(comboTheme);
     leftLayout->addWidget(themeGroup);
@@ -264,6 +267,11 @@ void MainWindow::setupUI() {
     btnReset->setObjectName("btnReset");
     btnSave = new QPushButton("Save Results", this);
     btnSave->setObjectName("btnSave");
+
+    // Default signal
+    currentSignal = std::make_shared<SquareSignal>(std::make_shared<BaseSignal>(), 1.0, 50, 0.5);
+    listSignals->addItem("Square(amp: 1, T: 50, dc: 0.5)");
+
     
     connect(btnRun, &QPushButton::clicked, this, &MainWindow::onRunSimulation);
     connect(btnReset, &QPushButton::clicked, this, &MainWindow::onResetParams);
@@ -276,7 +284,12 @@ void MainWindow::setupUI() {
     
     QWidget* leftWidget = new QWidget();
     leftWidget->setLayout(leftLayout);
-    leftWidget->setMaximumWidth(280);
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(leftWidget);
+    scrollArea->setMinimumWidth(280);
+    scrollArea->setMaximumWidth(320);
+    scrollArea->setFrameShape(QFrame::NoFrame);
     
     // ===== RIGHT PANEL: Graphs =====
     QVBoxLayout* rightLayout = new QVBoxLayout();
@@ -303,7 +316,7 @@ void MainWindow::setupUI() {
     rightWidget->setLayout(rightLayout);
     
     // Main layout
-    mainLayout->addWidget(leftWidget, 0);
+    mainLayout->addWidget(scrollArea, 0);
     mainLayout->addWidget(rightWidget, 1);
 }
 

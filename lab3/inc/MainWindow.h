@@ -1,5 +1,6 @@
 #pragma once
 #include <QMainWindow>
+#include <QScrollArea>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QPushButton>
